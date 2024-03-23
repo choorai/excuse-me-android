@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Excuse me</string>
+    <string name="app_name_kr">저기요!</string>
+    <string name="login">로그인</string>
+    <string name="login_id_label">아이디</string>
+    <string name="login_password_label">비밀번호</string>
 </resources>
