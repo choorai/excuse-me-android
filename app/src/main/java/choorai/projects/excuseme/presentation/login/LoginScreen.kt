@@ -1,6 +1,8 @@
 package choorai.projects.excuseme.presentation.login
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,7 +29,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -44,6 +50,7 @@ fun LoginScreen() {
         Column(modifier = Modifier.fillMaxSize()) {
             TopSection()
             InputSection()
+            SocialLoginSection()
         }
     }
 }
@@ -189,7 +196,78 @@ private fun InputSection() {
 }
 
 @Composable
-fun RememberMeRadioButton() {
+private fun SocialLoginSection() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
+    ) {
+        SocialLoginButton(
+            borderColor = Color(0xFFFEE500),
+            socialLoginText = "카카오톡 계정으로 로그인",
+            logoImage = painterResource(
+                id = R.drawable.kakaotalk_logo
+            )
+        )
+        SocialLoginButton(
+            borderColor = Color(0xFF2DB400),
+            socialLoginText = "네이버 계정으로 로그인",
+            logoImage = painterResource(
+                id = R.drawable.naver_logo
+            )
+        )
+        SocialLoginButton(
+            borderColor = Color(0xFFABABAB),
+            socialLoginText = "구글 계정으로 로그인",
+            logoImage = painterResource(
+                id = R.drawable.google_logo
+            )
+        )
+    }
+}
+
+@Composable
+private fun SocialLoginButton(
+    modifier: Modifier = Modifier,
+    borderColor: Color = Color.Black,
+    socialLoginText: String = "로그인을 해주세요",
+    logoImage: Painter
+) {
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 4.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent,
+            contentColor = Color.Black
+        ),
+        border = BorderStroke(2.dp, borderColor),
+        shape = RoundedCornerShape(18),
+    ) {
+        Image(
+            painter = logoImage,
+            contentDescription = "icon",
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .size(32.dp)
+                .padding(start = 0.dp)
+                .clip(shape = RoundedCornerShape(28)),
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = socialLoginText, color = Color(0xFF707070), fontSize = 18.sp)
+        }
+    }
+}
+
+@Composable
+private fun RememberMeRadioButton() {
     val selectedOption = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.padding(top = 5.dp)) {
