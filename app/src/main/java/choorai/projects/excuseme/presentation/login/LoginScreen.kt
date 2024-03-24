@@ -3,6 +3,7 @@ package choorai.projects.excuseme.presentation.login
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,16 +44,19 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import choorai.projects.excuseme.R
+import choorai.projects.excuseme.Screen
+import choorai.projects.excuseme.ui.theme.DarkModeTextColor
 import choorai.projects.excuseme.ui.theme.primaryColor
 import choorai.projects.excuseme.ui.theme.secondaryColor
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
             TopSection()
-            InputSection()
+            InputSection(navController)
             SocialLoginSection()
         }
     }
@@ -117,7 +122,7 @@ private fun TopSection() {
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-private fun InputSection() {
+private fun InputSection(navController: NavHostController) {
     val idTextState = remember { mutableStateOf("") }
     val passwordTextState = remember { mutableStateOf("") }
 
@@ -189,23 +194,41 @@ private fun InputSection() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             // TODO : 향후 페이지 이동을 위한 처리 OR 해당 처리가 안된다면 button 객체로 바꿀 필요 존재
-            Text(
-                text = "회원가입",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black
+            TextButton(
+                onClick = { navController.navigate(Screen.SignUp.route) },
+                modifier = Modifier.height(36.dp)
+            ) {
+                Text(
+                    text = "회원가입",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 )
-            )
-            Text(text = "|")
-            Text(
-                text = "아이디/비밀번호 찾기",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black
+            }
+            // 형식 맞추기 위해서 버튼객체로 생성. 실제로는 클릭되지 않음. 단순 텍스트 표현을 위해 추가
+            TextButton(onClick = {}, enabled = false, modifier = Modifier.height(36.dp)) {
+                Text(
+                    text = "|",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 )
-            )
+            }
+            TextButton(
+                onClick = { /* TODO : 아이디,비밀번호 찾기 화면으로 이동하는 처리 추가 필요 */ },
+                modifier = Modifier.height(36.dp)
+            ) {
+
+                Text(
+                    text = "아이디/비밀번호 찾기",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                )
+            }
         }
     }
 }
@@ -276,7 +299,7 @@ private fun SocialLoginButton(
                 .padding(start = 15.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = socialLoginText, color = Color(0xFF707070), fontSize = 18.sp)
+            Text(text = socialLoginText, color = MaterialTheme.colorScheme.primary, fontSize = 16.sp)
         }
     }
 }
