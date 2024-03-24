@@ -16,13 +16,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = DarkModeTextColor, // Text color 를 위해 설정
     secondary = PurpleGrey80,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = LightModeTextColor,
     secondary = PurpleGrey40,
     tertiary = Pink40
 
@@ -41,7 +41,7 @@ private val LightColorScheme = lightColorScheme(
 fun ExcuseMeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
