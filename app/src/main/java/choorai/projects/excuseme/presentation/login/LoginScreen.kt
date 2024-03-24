@@ -42,16 +42,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import choorai.projects.excuseme.R
+import choorai.projects.excuseme.Screen
 import choorai.projects.excuseme.ui.theme.primaryColor
 import choorai.projects.excuseme.ui.theme.secondaryColor
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
             TopSection()
-            InputSection()
+            InputSection(navController)
             SocialLoginSection()
         }
     }
@@ -117,7 +119,7 @@ private fun TopSection() {
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-private fun InputSection() {
+private fun InputSection(navController: NavHostController) {
     val idTextState = remember { mutableStateOf("") }
     val passwordTextState = remember { mutableStateOf("") }
 
@@ -189,14 +191,16 @@ private fun InputSection() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             // TODO : 향후 페이지 이동을 위한 처리 OR 해당 처리가 안된다면 button 객체로 바꿀 필요 존재
-            Text(
-                text = "회원가입",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black
+            Button(onClick = { navController.navigate(Screen.SignUp.route) }) {
+                Text(
+                    text = "회원가입",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
                 )
-            )
+            }
             Text(text = "|")
             Text(
                 text = "아이디/비밀번호 찾기",
